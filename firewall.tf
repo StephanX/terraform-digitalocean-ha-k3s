@@ -1,5 +1,5 @@
 resource "digitalocean_firewall" "ccm_firewall" {
-  name = "ccm-firewall"
+  name = "${local.project_name}-ccm-firewall"
 
   outbound_rule {
     protocol              = "icmp"
