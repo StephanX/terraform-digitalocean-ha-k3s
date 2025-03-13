@@ -52,6 +52,12 @@ variable "database_size" {
   default     = "db-s-1vcpu-1gb"
 }
 
+variable "database_node_create" {
+  type        = bool
+  description = "Number of nodes that comprise the database cluster"
+  default     = true
+}
+
 variable "database_node_count" {
   type        = number
   description = "Number of nodes that comprise the database cluster"

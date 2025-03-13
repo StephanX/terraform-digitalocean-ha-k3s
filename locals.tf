@@ -1,14 +1,14 @@
 locals {
-  db_host = digitalocean_database_cluster.k3s.private_host
-  db_port = digitalocean_database_cluster.k3s.port
-  db_user = var.database_user
-  db_pass = digitalocean_database_user.dbuser.password
-  db_name = digitalocean_database_cluster.k3s.database
+  # db_host = digitalocean_database_cluster.k3s.private_host
+  # db_port = digitalocean_database_cluster.k3s.port
+  # db_user = var.database_user
+  # db_pass = digitalocean_database_user.dbuser.password
+  # db_name = digitalocean_database_cluster.k3s.database
 
-  postgres_uri = "postgres://${local.db_user}:${local.db_pass}@${local.db_host}:${local.db_port}/${local.db_name}"
-  mysql_uri    = "mysql://${local.db_user}:${local.db_pass}@tcp(${local.db_host}:${local.db_port})/${local.db_name}"
+  # postgres_uri = "postgres://${local.db_user}:${local.db_pass}@${local.db_host}:${local.db_port}/${local.db_name}"
+  # mysql_uri    = "mysql://${local.db_user}:${local.db_pass}@tcp(${local.db_host}:${local.db_port})/${local.db_name}"
 
-  db_cluster_uri = var.database_engine == "postgres" ? local.postgres_uri : local.mysql_uri
+  db_cluster_uri = var.database_engine == "postgres" # ? local.postgres_uri : local.mysql_uri
 
   server_droplet_tag = digitalocean_tag.server.name
   agent_droplet_tag  = digitalocean_tag.agent.name
