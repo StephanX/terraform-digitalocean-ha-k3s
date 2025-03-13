@@ -8,7 +8,7 @@ resource "digitalocean_firewall" "ccm_firewall" {
 }
 
 resource "digitalocean_firewall" "k3s_firewall" {
-  name = "k3s-firewall"
+  name = "${local.project_name}-k3s"
 
   tags = [digitalocean_tag.server.name, digitalocean_tag.agent.name]
 
