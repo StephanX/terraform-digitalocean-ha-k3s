@@ -10,6 +10,8 @@ locals {
 
   db_cluster_uri = var.database_engine == "postgres" # ? local.postgres_uri : local.mysql_uri
 
+  project_name = var.project_name
+
   server_droplet_tag = digitalocean_tag.server.name
   agent_droplet_tag  = digitalocean_tag.agent.name
   ccm_fw_tags        = var.server_taint_criticalonly == false ? join(",", [local.server_droplet_tag, local.agent_droplet_tag]) : local.agent_droplet_tag

@@ -18,6 +18,12 @@ variable "region" {
   }
 }
 
+variable "project_name" {
+  type        = string
+  description = "project name"
+  default     = "k3s-cluster"
+}
+
 variable "vpc_network_range" {
   type        = string
   description = "Range of IP addresses for the VPC in CIDR notation. Cannot be larger than /16 or smaller than /24. Default is 10.10.10.0/24"
