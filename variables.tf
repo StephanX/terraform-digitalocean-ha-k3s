@@ -47,7 +47,7 @@ variable "database_engine" {
   description = "Database engine. PostgreSQL (13) or MySQL (8)"
   default     = "postgres"
   validation {
-    condition     = length(regexall("^postgres|mysql$", var.database_engine)) > 0
+    condition     = length(regexall("^postgres|mysql$|local", var.database_engine)) > 0
     error_message = "Invalid database engine. Valid types are postgres or mysql."
   }
 }
