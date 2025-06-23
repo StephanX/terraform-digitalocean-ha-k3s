@@ -3,9 +3,14 @@ variable "do_token" {
   description = "DigitalOcean Personal Access Token"
 }
 
-variable "ssh_key_fingerprints" {
-  type        = list(string)
-  description = "List of SSH Key fingerprints"
+variable "ssh_key" {
+  type        = string
+  description = "SSH Key fingerprint"
+}
+
+variable "tls_san" {
+  type        = string
+  description = "k3s tls-san"
 }
 
 variable "region" {
@@ -36,102 +41,18 @@ variable "k3s_channel" {
   default     = "stable"
 }
 
-variable "database_user" {
-  type        = string
-  description = "Database Username"
-  default     = "k3s_default_user"
-}
-
-variable "database_engine" {
-  type        = string
-  description = "Database engine. PostgreSQL (13) or MySQL (8)"
-  default     = "postgres"
-  validation {
-    condition     = length(regexall("^postgres|mysql$|local", var.database_engine)) > 0
-    error_message = "Invalid database engine. Valid types are postgres or mysql."
-  }
-}
-
-variable "database_size" {
-  type        = string
-  description = "Database Droplet size associated with the cluster (ex. db-s-1vcpu-1gb)"
-  default     = "db-s-1vcpu-1gb"
-}
-
-variable "database_node_create" {
-  type        = bool
-  description = "Number of nodes that comprise the database cluster"
-  default     = true
-}
-
-variable "database_node_count" {
-  type        = number
-  description = "Number of nodes that comprise the database cluster"
-  default     = 1
-}
-
-variable "flannel_backend" {
-  type        = string
-  description = "Flannel Backend Type. Valid options include vxlan (default), ipsec or wireguard"
-  default     = "vxlan"
-  validation {
-    condition     = length(regexall("^ipsec|vxlan|wireguard-native$", var.flannel_backend)) > 0
-    error_message = "Invalid Flannel backend value. Valid backend types are vxlan, ipsec & wireguard-native."
-  }
-}
-
 variable "server_size" {
   type        = string
   description = "Server droplet size. e.g. s-1vcpu-2gb"
-  default     = "s-1vcpu-2gb" # prod = s-1vcpu-2gb
+  default     = "s-1vcpu-2gb"
 }
-variable "agent_size" {
+
+variable "server_image" {
   type        = string
-  description = "Agent droplet size. e.g. s-1vcpu-2gb"
-  default     = "s-1vcpu-2gb" # prod = s-2vcpu-4gb
+  description = "Server Image to use e.g. ubuntu-24-10-x64"
+  default     = "ubuntu-24-10-x64"
 }
 
-variable "server_count" {
-  type        = number
-  description = "Number of server (master) nodes to provision"
-  default     = 2
-}
-variable "agent_count" {
-  type        = number
-  description = "Number of agent (worker) nodes to provision"
-  default     = 1
-}
-
-variable "server_taint_criticalonly" {
-  type        = bool
-  description = "Allow only critical addons to be scheduled on servers? (thus preventing workloads from being launched on them)"
-  default     = true
-}
-
-variable "k8s_dashboard" {
-  type        = bool
-  description = "Pre-install the Kubernetes Dashboard? (Default is false)"
-  default     = false
-}
-
-variable "k8s_dashboard_version" {
-  type        = string
-  description = "Kubernetes Dashboard version"
-  default     = "2.7.0" # https://github.com/kubernetes/dashboard/releases
-}
-
-variable "cert_manager" {
-  type        = bool
-  description = "Pre-install cert-manager? (Default is false)"
-  default     = false
-}
-
-variable "cert_manager_version" {
-  type        = string
-  description = "cert-manager version"
-  default     = "1.11.0" # https://github.com/jetstack/cert-manager/releases
-
-}
 
 variable "sys_upgrade_ctrl" {
   type        = bool
@@ -139,30 +60,8 @@ variable "sys_upgrade_ctrl" {
   default     = false
 }
 
-variable "ingress" {
-  type        = string
-  description = "Ingress controller to install"
-  default     = "none"
-  validation {
-    condition     = length(regexall("^kong|kong_pg|nginx|traefik|none$", var.ingress)) > 0
-    error_message = "Invalid ingress type. Valid ingress types are kong, kong_pg, traefik or nginx."
-  }
-}
-
-variable "traefik_version" {
-  type        = string
-  description = "Traefik version to install (if enabled)"
-  default     = "2.9.7"
-}
-
 variable "server_tag" {
   type        = string
   description = "Server resource tag name."
   default     = "k3s_server"
-}
-
-variable "agent_tag" {
-  type        = string
-  description = "Agent resource tag name."
-  default     = "k3s_agent"
 }
